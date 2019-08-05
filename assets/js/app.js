@@ -24,18 +24,21 @@ topics.forEach((item, index) => {
       url: searchString + chosenTopic,
       method: "GET"
     }).then(function(response) {
+      $(".image-container").empty();
       response.data.forEach(element => {
-        console.log(element)
-        image = element
+        console.log(element);
         $(".image-container").append(
-          `<img src="${element.images.downsized_still.url}"></img>`);
-      
-      
-      })
-      $('img').mouseover(e => {
-        console.log(e);
-        $(e.target).attr('src', image.images.downsized.url)
-      })
+          `<img src="${element.images.downsized_still.url}" data-gif="${
+            element.images.downsized.url
+          }" data-still="${element.images.downsized_still.url}"></img>`
+        );
+      });
+      $("img").mouseenter(function(e) {
+        $(e.target).attr("src", $(e.target).attr("data-gif"));
+      });
+      $("img").mouseleave(function(e) {
+        $(e.target).attr("src", $(e.target).attr("data-still"));
+      });
     });
   });
 });
