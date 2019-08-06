@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gif Generator</title>
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 
 </head>
@@ -23,18 +24,21 @@
         </header>
 
     </div>
-    <div class="add-topic">
-        <input type="text" id="topic-input">
-        <button id="add-button">Add</button>
-    </div>
-    <div class="button-container">
-        <div class="buttons">
+    <div class="main-display">
+        <div class="left-panel">
 
+            <div class="add-topic">
+                <input type="text" id="topic-input" placeholder="Enter a new topic">
+                <button id="add-button" class="button">Add</button>
+                <button id="clear-button" class="button">Clear</button>
+            </div>
+            <div class="button-container">
+                <div class="buttons"></div>
+            </div>
         </div>
-    </div>
 
-    <div class="image-container">
-        <img src="" alt="">
+
+        <div class="image-container"></div>
     </div>
 
 

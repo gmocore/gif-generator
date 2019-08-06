@@ -15,37 +15,67 @@ const topics = [
 
 const searchString = `https://api.giphy.com/v1/gifs/search?api_key=0q2XqKx6Ynz8T8KJYTzu1FMObhUHEv0X&limit=10&rating=PG&lang=en&q=`;
 
-$("#add-button").click(function() {
-  console.log("clicked");
-  topics.push($("#topic-input").val());
-  console.log(topics);
-  makeStuff();
+renderButtons();
+
+$("#add-button").click(() => {
+  // ensures a value is entered into input
+  if ($("#topic-input").val() !== "") {
+    // add new topic to topics array for rendering
+    topics.push($("#topic-input").val());
+    renderButtons();
+  }
 });
-function makeStuff() {
+
+$("#clear-button").click(() => {
+  $(".image-container").fadeOut(500);
+});
+
+function renderButtons() {
+  // clear existing buttons
   $(".buttons").empty();
+  // create buttons from topics array
   topics.forEach((item, index) => {
-    const button = `<button id="${index}">${item}</button>`;
-    $(".buttons").append(button);
-    $(`#${index}`).click(function() {
+    const button = $(`<button id="${index}">${item}</button>`).addClass(
+      "button"
+    );
+    $(".buttons").prepend(button);
+    // .hide()
+    // .fadeIn(500);
+    // add event listeners for created buttons
+    $(`#${index}`).click(() => {
       let chosenTopic = topics[index];
+      // api request
       $.ajax({
         url: searchString + chosenTopic,
         method: "GET"
       }).then(function(response) {
+        console.log(response);
+        // clear images on new request
         $(".image-container").empty();
         response.data.forEach(element => {
-          console.log(element);
-          $(".image-container").append(
-            `<img src="${element.images.downsized_still.url}" data-gif="${
-              element.images.downsized.url
-            }" data-still="${element.images.downsized_still.url}"></img>`
+          const image_div = $("<div></div>").addClass("image");
+          const ratingDisplay = $(
+            `<p>Rating: ${element.rating.toUpperCase()}</p>`
+          ).addClass("rating");
+          const gifImage = $(
+            `<img src="${element.images.fixed_height_still.url}" data-gif="${
+              element.images.fixed_height.url
+            }" data-still="${element.images.fixed_height_still.url}"></img>`
           );
+          image_div.append(gifImage);
+          image_div.append(ratingDisplay);
+          $(".image-container")
+            .prepend(image_div)
+            .hide()
+            .fadeIn(500);
         });
-        $("img").mouseenter(function(e) {
-          $(e.target).attr("src", $(e.target).attr("data-gif"));
+        // on hover, gif plays
+        $("img").mouseenter(function() {
+          $(this).attr("src", $(this).attr("data-gif"));
         });
-        $("img").mouseleave(function(e) {
-          $(e.target).attr("src", $(e.target).attr("data-still"));
+        // on mouseout, gif stops playing
+        $("img").mouseleave(function() {
+          $(this).attr("src", $(this).attr("data-still"));
         });
       });
     });
