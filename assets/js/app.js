@@ -33,17 +33,18 @@ $("#clear-button").click(() => {
 function renderButtons() {
   // clear existing buttons
   $(".buttons").empty();
+  $(".favorite-container").hide();
+
   // create buttons from topics array
   topics.forEach((item, index) => {
     const button = $(`<button id="${index}">${item}</button>`).addClass(
       "button"
     );
     $(".buttons").prepend(button);
-    // .hide()
-    // .fadeIn(500);
     // add event listeners for created buttons
     $(`#${index}`).click(() => {
       let chosenTopic = topics[index];
+      $(".image-container").fadeOut(1000);
       // api request
       $.ajax({
         url: searchString + chosenTopic,
@@ -51,7 +52,9 @@ function renderButtons() {
       }).then(function(response) {
         console.log(response);
         // clear images on new request
-        $(".image-container").empty();
+        $(".image-container")
+          .fadeOut(1000)
+          .empty();
         response.data.forEach(element => {
           const image_div = $("<div></div>").addClass("image");
           const ratingDisplay = $(
@@ -62,12 +65,29 @@ function renderButtons() {
               element.images.fixed_height.url
             }" data-still="${element.images.fixed_height_still.url}"></img>`
           );
+          const favorites = $(`<i></i>`).addClass("favorites far fa-heart");
+
           image_div.append(gifImage);
           image_div.append(ratingDisplay);
+          image_div.append(favorites);
+
           $(".image-container")
             .prepend(image_div)
             .hide()
             .fadeIn(500);
+        });
+        $(".favorites").click(e => {
+          const removeIcon = $(`<i></i>`).addClass("fas fa-times");
+          console.log(e);
+          $(".favorite-container").fadeIn();
+
+          $(".favorite-container").append(e.target.parentNode);
+          $(e.target).remove(".favorites");
+          $(`.favorite-container>.image`).append(removeIcon);
+          removeIcon.click(e => {
+            console.log(e.target.parentNode);
+            $(e.target.parentNode).fadeOut(700);
+          });
         });
         // on hover, gif plays
         $("img").mouseenter(function() {

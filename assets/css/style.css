@@ -57,7 +57,8 @@ input:hover {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 80vw;
+  width: 60vw;
+  /* position: absolute; */
 }
 
 .image {
@@ -74,4 +75,16 @@ input:hover {
 
 .rating {
   text-align: center;
+}
+
+/* .favorites-container {
+
+} */
+
+.far {
+  transition: 0.6s;
+  cursor: pointer;
+}
+.far:hover {
+  color: #db3a34;
 }
