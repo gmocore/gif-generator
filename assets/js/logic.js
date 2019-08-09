@@ -17,12 +17,20 @@ let stillImage;
 let animatedImage;
 let rating;
 
+
+$("#topic-input").on('keyup', function(e) {
+  if(e.keyCode === 13) {
+    $('#add-button').click()
+  }
+})
+
 $("#add-button").click(() => {
   // ensures a value is entered into input
   if ($("#topic-input").val() !== "") {
     // add new topic to topics array for rendering
     topics.push($("#topic-input").val());
     renderButtons();
+    $("#topic-input").val('')
   }
 });
 // clear displayed gifs
@@ -92,3 +100,4 @@ function renderImages() {
     }
   });
 }
+

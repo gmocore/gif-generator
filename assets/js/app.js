@@ -46,6 +46,9 @@ function renderButtons() {
     $(".buttons").prepend(button);
     // add event listeners for created buttons
     $(`#${index}`).click(() => {
+
+
+
       let chosenTopic = topics[index];
       $(".image-container").fadeOut(1000);
       // api request
@@ -93,10 +96,10 @@ function renderButtons() {
           // remove heart icon when gif is appended to favorites
           $(e.target).remove(".favorites");
           // add x icon for removal from favorites
-          $(`.favorite-container>.image`).append(removeIcon);
+          $(`.favorite-container > .image`).append(removeIcon);
           // remove gif container when removeIcon is clicked
           removeIcon.click(e => {
-            console.log(e.target.parentNode);
+            console.log(this);
             $(e.target.parentNode).fadeOut(700);
           });
         });
