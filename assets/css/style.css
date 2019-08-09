@@ -81,10 +81,10 @@ input:hover {
 
 } */
 
-.far {
+.far, .fas {
   transition: 0.6s;
   cursor: pointer;
 }
-.far:hover {
+.far:hover, .fas:hover {
   color: #db3a34;
 }

@@ -82,6 +82,7 @@ function renderImages() {
   image_div.append(gifImage);
   image_div.append(ratingDisplay);
   image_div.append(favorites);
+  addToFavorites(favorites)
   // display image_div
   $(".image-container")
     .prepend(image_div)
@@ -99,5 +100,24 @@ function renderImages() {
       $(e.target).attr("src", $(e.target).attr("data-still"));
     }
   });
+}
+
+function addToFavorites(favorites) {
+  favorites.click(function(e){
+    if(e.target.className.includes('favorites')) {
+
+      $('.favorite-container').show()
+      $('.favorite-container').append(e.target.parentNode)
+      $(e.target).removeClass('favorites far fa-heart')
+      $(e.target).addClass('fas fa-times')
+    }
+    else if(e.target.className.includes('fa-times')) {
+      removeFromFavorites(e.target.parentNode)
+    }
+  })
+}
+
+function removeFromFavorites(parent) {
+  $(parent).fadeOut()
 }
 
